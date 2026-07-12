@@ -1,3 +1,37 @@
+# Above & Beyond International Group — abintlgrp.com
+# All search engines welcome
 User-agent: *
 Allow: /
+
+# AI search & answer engines — explicitly allowed so ABIG appears in AI results
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
 Sitemap: https://abintlgrp.com/sitemap.xml
