@@ -1013,13 +1013,9 @@ section[id]{scroll-margin-top:var(--nav-h)}
 /* ── BTL ZONE (marketing vertical) — mobile ──────────────────*/
 @media(max-width:900px){
   #mv-btl{padding:72px 22px 80px !important}
-  /* the 3D backdrop is authored as a right-hand desktop panel; on a phone the
-     section is ~2200px tall, so unconstrained it smears behind every block */
-  #mv-btl > .mvbtl-bg{bottom:auto !important;height:min(560px,66vh) !important}
-  #mv-btl > .mvbtl-bg .mvbtl-vig{background:
-    linear-gradient(180deg,rgba(5,5,5,.35) 0%,rgba(5,5,5,.1) 40%,rgba(5,5,5,.92) 100%) !important}
-  #mv-btl > .mvbtl-bg .mvbtl-glow{right:auto !important;left:50% !important;
-    transform:translateX(-50%) !important;width:86% !important;top:8% !important}
+  /* the 3D backdrop is desktop-only (see BG_MIN_WIDTH); belt-and-braces in case
+     a desktop viewport is narrowed after it has already booted */
+  #mv-btl > .mvbtl-bg{display:none !important}
   /* ghost "BELOW THE LINE" wordmark + desktop-sized rhythm */
   #mv-btl [data-dc-tpl="137"]{padding:20px 22px 0 !important}
   #mv-btl [data-dc-tpl="138"]{font-size:clamp(34px,13vw,64px) !important}
@@ -58393,18 +58389,9 @@ function boot(hero){
                          h=layer.clientHeight||hero.clientHeight||innerHeight;
     renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
     const halfW=Math.tan(camera.fov*Math.PI/360)*camera.position.z*camera.aspect;
-    if(w<=900){
-      // phone: no left text column to clear, so centre it and scale off the
-      // narrow axis instead of the (very tall) section height
-      stage.position.x = 0;
-      stage.position.y = 1.7;      // lift it clear of the headline block
-      stage.scale.setScalar(0.55*Math.min(1, w/520));
-    } else {
-      // keep the form in the right portion of ANY screen width (never off-screen)
-      stage.position.x = halfW*0.42;
-      stage.position.y = 0;
-      stage.scale.setScalar(0.76*Math.min(1,1500/Math.max(h,1)));
-    } }   // further right so it clears the headline
+    // keep the form in the right portion of ANY screen width (never off-screen)
+    stage.position.x = halfW*0.42;
+    stage.scale.setScalar(0.76*Math.min(1,1500/Math.max(h,1))); }   // further right so it clears the headline
   size(); const ro=new ResizeObserver(size); ro.observe(hero); ro.observe(layer);
 
   // safety net: if the page (React etc.) ever detaches our layer, re-attach it
@@ -58433,12 +58420,21 @@ function boot(hero){
 }
 
 /* ---- wait for the bundler to render the hero, then inject ---- */
-function tryBoot(){ const h=document.querySelector(HERO_SELECTOR); if(h){ boot(h); return true; } return false; }
+// Desktop only: the backdrop is composed around a left text column that doesn't
+// exist on a phone, so below 900px the BTL section stays flat and no WebGL
+// context is created at all.
+const BG_MIN_WIDTH = 901;
+function tryBoot(){
+  if(innerWidth < BG_MIN_WIDTH) return false;
+  const h=document.querySelector(HERO_SELECTOR); if(h){ boot(h); return true; } return false;
+}
 if(!tryBoot()){
   const mo=new MutationObserver(()=>{ if(tryBoot()) mo.disconnect(); });
   mo.observe(document, {childList:true, subtree:true});
   // safety fallback in case observer misses it
   let n=0; const iv=setInterval(()=>{ if(tryBoot()||++n>60) clearInterval(iv); }, 250);
+  // a tablet rotated past the breakpoint should still get the backdrop
+  addEventListener('resize', function(){ tryBoot(); });
 }
 
 }catch(e){console.error("[hero-bg]",e);}
@@ -58447,7 +58443,16 @@ if(!tryBoot()){
 <style id="vembed-css">.vembed-wrap{position:relative;width:100%;}.vembed{width:100%;border:0;display:block;background:#0A0A0A;min-height:100vh;}.vembed-snap{height:100vh!important;min-height:100vh;}</style>
 <script id="vembed-js">(function(){function size(){document.querySelectorAll('.page.active .vembed:not(.vembed-snap)').forEach(function(f){try{var d=f.contentDocument;var h=d&&d.body?Math.max(d.body.scrollHeight,d.documentElement.scrollHeight):0;if(h>300)f.style.height=h+'px';if(d){d.querySelectorAll('video[autoplay]').forEach(function(v){if(v.paused){v.muted=true;var p=v.play&&v.play();if(p&&p.catch)p.catch(function(){});}});}}catch(e){}});}setInterval(size,700);window.addEventListener('resize',size);})();</script>
 <style id="mkt-ambiance">@keyframes mktFlow{0%,100%{transform:translate(-2%,-1%) scale(1.02)}33%{transform:translate(6%,4%) scale(1.09)}66%{transform:translate(-5%,-3%) scale(1.05)}}#page-v-marketing #mv-atl,#page-v-marketing #mv-btl,#page-v-marketing section[data-screen-label="One Agency"]{position:relative;overflow:hidden;}#page-v-marketing #mv-atl::after,#page-v-marketing #mv-btl::after,#page-v-marketing section[data-screen-label="One Agency"]::after{content:'';position:absolute;inset:-6%;z-index:0;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(45% 42% at 22% 26%,rgba(229,25,125,.32),transparent 62%),radial-gradient(42% 42% at 84% 70%,rgba(200,22,110,.24),transparent 62%),radial-gradient(65% 52% at 58% 112%,rgba(150,18,85,.20),transparent 60%);animation:mktFlow 24s ease-in-out infinite;}</style><style id="vp-css">.vp-block{margin-top:clamp(56px,7vw,104px);margin-bottom:clamp(64px,8vw,120px);padding-bottom:clamp(40px,5vw,72px);border-bottom:1px solid rgba(255,255,255,.08);}.vp-eyebrow{font-size:10px;font-weight:800;letter-spacing:.28em;color:#E5197D;margin-bottom:14px;text-transform:uppercase;}.vp-h{font-size:clamp(24px,2.6vw,34px);font-weight:800;line-height:1.1;margin-bottom:10px;}.vp-sub{font-size:13.5px;font-weight:300;color:rgba(248,246,242,.55);line-height:1.7;max-width:56ch;margin-bottom:clamp(26px,3vw,42px);}.vp-feature video{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;background:#000;border:1px solid rgba(255,255,255,.1);border-radius:14px;}.vp-feature{margin-bottom:clamp(16px,1.8vw,24px);}.vp-reels{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.4vw,18px);margin-bottom:clamp(16px,1.8vw,24px);}.vp-reel video{width:100%;display:block;aspect-ratio:9/16;object-fit:cover;background:#000;border:1px solid rgba(255,255,255,.1);border-radius:14px;}.vp-wide video{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;background:#000;border:1px solid rgba(255,255,255,.1);border-radius:14px;}.vp-block video::-webkit-media-controls-download-button{display:none!important;}@media(max-width:720px){.vp-reels{grid-template-columns:1fr;}}</style>
-<style id="nav-coin-chip-css">#navCoinChip{display:none !important;transition:opacity .3s}body:has(#page-v-digital.active) #navCoinChip{display:inline-flex !important}@media(max-width:820px){#navCoinChip{display:none !important}}.ftCoinChip{display:none !important}#page-v-digital .ftCoinChip{display:inline-flex !important}</style>
+<style id="nav-coin-chip-css">#navCoinChip{display:none !important;transition:opacity .3s}body:has(#page-v-digital.active) #navCoinChip{display:inline-flex !important}.ftCoinChip{display:none !important}#page-v-digital .ftCoinChip{display:inline-flex !important}
+/* Mobile: dock the ticker to the right beside the hamburger. The auto margin
+   normally lives on .nav-right; when the chip is showing it has to move to the
+   chip instead, or the two split the free space and the chip lands mid-bar. */
+@media(max-width:900px){
+  #navCoinChip{margin-left:34px;padding:6px 10px;font-size:11px;gap:6px;border-radius:8px}
+  body:has(#page-v-digital.active) #navCoinChip{margin-left:auto !important}
+  body:has(#page-v-digital.active) .nav-right{margin-left:12px}
+}
+@media(max-width:360px){#navCoinChip{padding:5px 8px;font-size:10px}}</style>
 <style id="re-paper-bg-css">
 #re-developers{background:linear-gradient(rgba(10,9,12,.38),rgba(10,9,12,.5)),url("jpg-22.jpg") center/cover !important;background-attachment:fixed,fixed !important;}
 </style>
