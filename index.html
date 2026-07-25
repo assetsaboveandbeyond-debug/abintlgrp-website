@@ -995,6 +995,42 @@ section[id]{scroll-margin-top:var(--nav-h)}
   .ft-nav{grid-template-columns:1fr}
 }
 
+/* ── MOBILE REFINEMENTS ──────────────────────────────────────*/
+@media(max-width:900px){
+  /* the auto margin lives on .nav-links, which is hidden here — so the
+     hamburger has to carry it or it collapses next to the logo */
+  .nav-right{margin-left:auto}
+
+  /* display headings are set at desktop leading (0.82–0.95); at phone widths
+     they wrap to 3–4 lines and the lines collide */
+  .hero-title{line-height:0.95}
+  .vh-title,.inner-title{line-height:1.05}
+  .inner-sub-title,.cta-main-head{line-height:1.08}
+  #page-about h2,#page-csr h2,#page-careers h2,
+  .inner-body h2,.inner-body h3,.sec-title{line-height:1.2}
+}
+
+/* ── BTL ZONE (marketing vertical) — mobile ──────────────────*/
+@media(max-width:900px){
+  #mv-btl{padding:72px 22px 80px !important}
+  /* the 3D backdrop is authored as a right-hand desktop panel; on a phone the
+     section is ~2200px tall, so unconstrained it smears behind every block */
+  #mv-btl > .mvbtl-bg{bottom:auto !important;height:min(560px,66vh) !important}
+  #mv-btl > .mvbtl-bg .mvbtl-vig{background:
+    linear-gradient(180deg,rgba(5,5,5,.35) 0%,rgba(5,5,5,.1) 40%,rgba(5,5,5,.92) 100%) !important}
+  #mv-btl > .mvbtl-bg .mvbtl-glow{right:auto !important;left:50% !important;
+    transform:translateX(-50%) !important;width:86% !important;top:8% !important}
+  /* ghost "BELOW THE LINE" wordmark + desktop-sized rhythm */
+  #mv-btl [data-dc-tpl="137"]{padding:20px 22px 0 !important}
+  #mv-btl [data-dc-tpl="138"]{font-size:clamp(34px,13vw,64px) !important}
+  #mv-btl [data-dc-tpl="144"]{max-width:none !important}
+  #mv-btl [data-dc-tpl="146"]{margin-bottom:32px !important}
+  #mv-btl [data-dc-tpl="147"]{margin-top:36px !important;margin-bottom:48px !important}
+  #mv-btl .scp2{width:224px !important;padding:24px 20px !important}
+  #mv-btl [data-dc-tpl="216"]{grid-template-columns:1fr !important;gap:10px !important}
+  #mv-btl [data-dc-tpl="215"]{white-space:normal !important}
+}
+
 /* ── STAT ANIMATIONS (LOOPING) ───────────────────────────────*/
 .hero-stat-n, .big-num {
   position: relative;
@@ -2281,8 +2317,9 @@ video:not([controls])::-webkit-media-controls-play-button{
       <div class="ft-col">
         <div class="ft-col-head">Company</div>
         <a href="#" data-page="home">Home</a>
-        <a href="#about-section">About</a>
-        <a href="#csr-section">CSR</a>
+        <a href="#" data-page="about">About</a>
+        <a href="#" data-page="csr">CSR</a>
+        <a href="#" data-page="careers">Careers</a>
         <a href="#contact-section">Contact</a>
       </div>
       <div class="ft-col">
@@ -2372,8 +2409,9 @@ video:not([controls])::-webkit-media-controls-play-button{
       <div class="ft-col">
         <div class="ft-col-head">Company</div>
         <a href="#" data-page="home">Home</a>
-        <a href="#about-section">About</a>
-        <a href="#csr-section">CSR</a>
+        <a href="#" data-page="about">About</a>
+        <a href="#" data-page="csr">CSR</a>
+        <a href="#" data-page="careers">Careers</a>
         <a href="#contact-section">Contact</a>
       </div>
       <div class="ft-col">
@@ -2458,8 +2496,9 @@ video:not([controls])::-webkit-media-controls-play-button{
       <div class="ft-col">
         <div class="ft-col-head">Company</div>
         <a href="#" data-page="home">Home</a>
-        <a href="#about-section">About</a>
-        <a href="#csr-section">CSR</a>
+        <a href="#" data-page="about">About</a>
+        <a href="#" data-page="csr">CSR</a>
+        <a href="#" data-page="careers">Careers</a>
         <a href="#contact-section">Contact</a>
       </div>
       <div class="ft-col">
@@ -2894,8 +2933,9 @@ video:not([controls])::-webkit-media-controls-play-button{
       <div class="ft-col">
         <div class="ft-col-head">Company</div>
         <a href="#" data-page="home">Home</a>
-        <a href="#about-section">About</a>
-        <a href="#csr-section">CSR</a>
+        <a href="#" data-page="about">About</a>
+        <a href="#" data-page="csr">CSR</a>
+        <a href="#" data-page="careers">Careers</a>
         <a href="#contact-section">Contact</a>
       </div>
       <div class="ft-col">
@@ -3129,8 +3169,9 @@ document.addEventListener(&#39;DOMContentLoaded&#39;, async function() {
       <div class="ft-col">
         <div class="ft-col-head">Company</div>
         <a href="#" data-page="home">Home</a>
-        <a href="#about-section">About</a>
-        <a href="#csr-section">CSR</a>
+        <a href="#" data-page="about">About</a>
+        <a href="#" data-page="csr">CSR</a>
+        <a href="#" data-page="careers">Careers</a>
         <a href="#contact-section">Contact</a>
       </div>
       <div class="ft-col">
@@ -3363,8 +3404,9 @@ document.addEventListener(&#39;DOMContentLoaded&#39;, async function() {
       <div class="ft-col">
         <div class="ft-col-head">Company</div>
         <a href="#" data-page="home">Home</a>
-        <a href="#about-section">About</a>
-        <a href="#csr-section">CSR</a>
+        <a href="#" data-page="about">About</a>
+        <a href="#" data-page="csr">CSR</a>
+        <a href="#" data-page="careers">Careers</a>
         <a href="#contact-section">Contact</a>
       </div>
       <div class="ft-col">
@@ -3504,8 +3546,9 @@ document.addEventListener(&#39;DOMContentLoaded&#39;, async function() {
       <div class="ft-col">
         <div class="ft-col-head">Company</div>
         <a href="#" data-page="home">Home</a>
-        <a href="#about-section">About</a>
-        <a href="#csr-section">CSR</a>
+        <a href="#" data-page="about">About</a>
+        <a href="#" data-page="csr">CSR</a>
+        <a href="#" data-page="careers">Careers</a>
         <a href="#contact-section">Contact</a>
       </div>
       <div class="ft-col">
@@ -3593,8 +3636,9 @@ document.addEventListener(&#39;DOMContentLoaded&#39;, async function() {
       <div class="ft-col">
         <div class="ft-col-head">Company</div>
         <a href="#" data-page="home">Home</a>
-        <a href="#about-section">About</a>
-        <a href="#csr-section">CSR</a>
+        <a href="#" data-page="about">About</a>
+        <a href="#" data-page="csr">CSR</a>
+        <a href="#" data-page="careers">Careers</a>
         <a href="#contact-section">Contact</a>
       </div>
       <div class="ft-col">
@@ -4359,8 +4403,9 @@ document.addEventListener('change', e => {
       <div class="ft-col">
         <div class="ft-col-head">Company</div>
         <a href="#" data-page="home">Home</a>
-        <a href="#about-section">About</a>
-        <a href="#csr-section">CSR</a>
+        <a href="#" data-page="about">About</a>
+        <a href="#" data-page="csr">CSR</a>
+        <a href="#" data-page="careers">Careers</a>
         <a href="#contact-section">Contact</a>
       </div>
       <div class="ft-col">
@@ -58264,12 +58309,15 @@ function boot(hero){
   // background layer (behind content which already sits at z-index >=1)
   const layer=document.createElement('div');
   layer.setAttribute('aria-hidden','true');
+  layer.className='mvbtl-bg';
   layer.style.cssText='position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden';
   // soft red glow centred on the form (upper-right), + legibility vignettes
   const glow=document.createElement('div');
+  glow.className='mvbtl-glow';
   glow.style.cssText='position:absolute;right:6%;top:24%;width:46%;height:60%;'
     +'background:radial-gradient(circle,rgba(229,25,125,.16),transparent 66%);filter:blur(6px)';
   const vig=document.createElement('div');
+  vig.className='mvbtl-vig';
   vig.style.cssText='position:absolute;inset:0;background:'
     +'linear-gradient(90deg,#000 0%,rgba(0,0,0,.35) 32%,transparent 60%),'
     +'linear-gradient(0deg,#000 0%,rgba(0,0,0,.4) 22%,transparent 50%)';
@@ -58341,13 +58389,23 @@ function boot(hero){
     b.points.material.opacity = DIM*0.95*assemble*base*(0.9-0.5*e);
   }
 
-  function size(){ const w=hero.clientWidth, h=hero.clientHeight||innerHeight;
+  function size(){ const w=layer.clientWidth||hero.clientWidth,
+                         h=layer.clientHeight||hero.clientHeight||innerHeight;
     renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
-    // keep the form in the right portion of ANY screen width (never off-screen)
     const halfW=Math.tan(camera.fov*Math.PI/360)*camera.position.z*camera.aspect;
-    stage.position.x = halfW*0.42;
-    var ms=0.76*Math.min(1,1500/Math.max(h,1)); stage.scale.setScalar(ms); }   // further right so it clears the headline
-  size(); new ResizeObserver(size).observe(hero);
+    if(w<=900){
+      // phone: no left text column to clear, so centre it and scale off the
+      // narrow axis instead of the (very tall) section height
+      stage.position.x = 0;
+      stage.position.y = 1.7;      // lift it clear of the headline block
+      stage.scale.setScalar(0.55*Math.min(1, w/520));
+    } else {
+      // keep the form in the right portion of ANY screen width (never off-screen)
+      stage.position.x = halfW*0.42;
+      stage.position.y = 0;
+      stage.scale.setScalar(0.76*Math.min(1,1500/Math.max(h,1)));
+    } }   // further right so it clears the headline
+  size(); const ro=new ResizeObserver(size); ro.observe(hero); ro.observe(layer);
 
   // safety net: if the page (React etc.) ever detaches our layer, re-attach it
   setInterval(()=>{ if(!layer.isConnected && hero.isConnected){ hero.insertBefore(layer, hero.firstChild); size(); } }, 1000);
@@ -58513,7 +58571,51 @@ if(!tryBoot()){
 #re-developers::after,#re-viz::after,#re-visual::after{content:'';position:absolute;inset:-6%;z-index:0;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(45% 42% at 22% 26%,rgba(192,132,252,.26),transparent 62%),radial-gradient(42% 42% at 84% 70%,rgba(150,90,225,.19),transparent 62%),radial-gradient(65% 52% at 58% 112%,rgba(110,60,180,.16),transparent 60%);animation:mktFlow 24s ease-in-out infinite;}
 #re-developers .W,#re-viz .W,#re-visual .W{position:relative;z-index:1;}
 </style>
-<script id="coin-chip-cycler">(function(){
+<script id="vembed-mobile-css">(function(){
+  // The vertical embeds are bundled desktop documents: every section carries
+  // 56px side padding and ~110px vertical padding, and their grids have fixed
+  // px minimums. They ship as srcdoc/src, so the responsive pass is injected.
+  var CSS = '@media(max-width:900px){'
+    /* only the sections that actually carry the 56px desktop gutter — full-bleed
+       dividers have padding:0 and must stay edge-to-edge */
+    + 'section[style*="56px"]{padding:74px 20px 70px !important}'
+    + '#av-hero{padding:60px 20px 64px !important}'
+    + 'h1,h2,h3{overflow-wrap:anywhere;line-height:1.12 !important}'
+    + 'h1{font-size:clamp(34px,12vw,54px) !important}'
+    /* fixed-minimum grids collapse to a single column rather than overflow */
+    + '[style*="minmax(280px"],[style*="minmax(320px"],[style*="minmax(300px"]'
+    + '{grid-template-columns:1fr !important;gap:22px !important}'
+    + '}';
+  function inject(doc){
+    try{
+      if(!doc || doc.getElementById('abig-vembed-mobile')) return;
+      var st = doc.createElement('style');
+      st.id = 'abig-vembed-mobile';
+      st.textContent = CSS;
+      (doc.head || doc.documentElement).appendChild(st);
+    }catch(e){}
+  }
+  function run(){
+    var frames = document.querySelectorAll('.vembed, iframe.vembed, #page-v-automotive iframe');
+    for(var i=0;i<frames.length;i++){
+      var d; try{ d = frames[i].contentDocument; }catch(e){ d = null; }
+      if(d && d.body) inject(d);
+      frames[i].addEventListener('load', (function(f){
+        return function(){ try{ inject(f.contentDocument); }catch(e){} };
+      })(frames[i]));
+    }
+  }
+  if(document.readyState !== 'loading') run();
+  document.addEventListener('DOMContentLoaded', run);
+  window.addEventListener('load', run);
+  // embeds are lazy-loaded, so re-check as pages become active
+  var tries = 0;
+  var iv = setInterval(function(){ run(); if(++tries > 40) clearInterval(iv); }, 500);
+  var _sp = window.showPage;
+  if(typeof _sp === 'function'){
+    window.showPage = function(){ var r = _sp.apply(this, arguments); setTimeout(run, 80); setTimeout(run, 600); return r; };
+  }
+})();</script><script id="coin-chip-cycler">(function(){
   var SYMS=[['BTCUSDT','BTC'],['DOGEUSDT','DOGE'],['SOLUSDT','SOL'],['XRPUSDT','XRP']];
   var data={},idx=0;
   function fmt(n){n=+n;var d=n<1?4:n<1000?2:0;return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});}
