@@ -504,7 +504,13 @@ h1.head .teal{color:var(--gold);}
 .svc-txt p{font-size:15px;color:var(--muted);max-width:46em;text-wrap:pretty;}
 .svc-chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end;}
 .svc-chips span{font-size:11.5px;color:var(--muted);border:1px solid var(--line-2);padding:5px 11px;border-radius:999px;white-space:nowrap;}
-@media(max-width:860px){.svc-row{grid-template-columns:44px 1fr;gap:14px 16px;padding:26px 6px;}.svc-ic{display:none;}.svc-chips{grid-column:1/-1;justify-content:flex-start;margin-top:4px;}}
+@media(max-width:860px){.svc-row{grid-template-columns:44px 1fr;gap:14px 16px;padding:26px 6px 26px 14px;}.svc-ic{display:none;}.svc-chips{grid-column:1/-1;justify-content:flex-start;margin-top:4px;}
+  /* --c only ever reached the screen through .svc-ic (hidden here) or :hover
+     (which never fires on touch), so the whole list rendered monochrome */
+  .svc-row::before{opacity:1;}
+  .svc-num{color:var(--c);}
+  .svc-chips span{border-color:color-mix(in srgb,var(--c) 32%,transparent);}
+}
 
 /* case study (dark) */
 .cs{position:relative;z-index:1;background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:28px;padding:60px 50px 56px;}
