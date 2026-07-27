@@ -1488,11 +1488,15 @@ section[id]{scroll-margin-top:var(--nav-h)}
 .drawer.open .drawer-link:nth-child(3){transition-delay:.32s}
 .drawer.open .drawer-link:nth-child(4){transition-delay:.39s}
 .drawer.open .drawer-link:nth-child(5){transition-delay:.46s}
-.drawer.open .drawer-vert:nth-child(1){transition-delay:.46s}
-.drawer.open .drawer-vert:nth-child(2){transition-delay:.53s}
-.drawer.open .drawer-vert:nth-child(3){transition-delay:.60s}
-.drawer.open .drawer-vert:nth-child(4){transition-delay:.67s}
-.drawer.open .drawer-vert:nth-child(5){transition-delay:.74s}
+/* .drawer-vert are direct children of .drawer, preceded by the close button,
+   .drawer-links and .drawer-sub — so :nth-child(1..5) only ever matched the
+   first two, and Digital / Real Estate / Import & Export got no delay and
+   appeared instantly. Count the <a>s instead. */
+.drawer.open .drawer-vert:nth-of-type(1){transition-delay:.46s}
+.drawer.open .drawer-vert:nth-of-type(2){transition-delay:.53s}
+.drawer.open .drawer-vert:nth-of-type(3){transition-delay:.60s}
+.drawer.open .drawer-vert:nth-of-type(4){transition-delay:.67s}
+.drawer.open .drawer-vert:nth-of-type(5){transition-delay:.74s}
 
 /* ═════ SITE-WIDE LIQUID GLASS ═════ */
 .pillar-card,
