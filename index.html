@@ -58642,17 +58642,24 @@ if(!tryBoot()){
 })();</script><script id="trade-iframe-autosize">(function(){
   var f=document.getElementById('tradeOpsFrame');
   if(!f)return;
+  // Size to content at EVERY width. This used to fit only below 860px and pin
+  // 820px otherwise, which cut ~2200px off the embed on desktop.
   function fit(){
     try{
-      if(window.innerWidth<=860 && f.contentDocument && f.contentDocument.documentElement){
-        f.style.height=Math.max(600, f.contentDocument.documentElement.scrollHeight)+'px';
-      }else{
-        f.style.height='820px';
-      }
+      var d=f.contentDocument; if(!d||!d.documentElement) return;
+      var h=Math.max(d.documentElement.scrollHeight, d.body?d.body.scrollHeight:0);
+      if(h>300 && Math.abs(h-f.offsetHeight)>2) f.style.height=h+'px';
     }catch(e){}
   }
-  f.addEventListener('load',function(){fit();setTimeout(fit,800);});
+  f.addEventListener('load',function(){fit();setTimeout(fit,300);setTimeout(fit,1200);});
   var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(fit,200);});
+  // the embed is lazy-loaded and its images settle late, so keep checking briefly
+  var n=0,iv=setInterval(function(){fit();if(++n>40)clearInterval(iv);},500);
+  if(typeof ResizeObserver==='function'){
+    f.addEventListener('load',function(){
+      try{ new ResizeObserver(fit).observe(f.contentDocument.documentElement); }catch(e){}
+    });
+  }
 })();</script><script id="global-video-kick">(function(){
   function playIn(root){
     if(!root) return;
