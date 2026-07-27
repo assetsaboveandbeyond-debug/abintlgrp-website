@@ -58624,6 +58624,50 @@ if(!tryBoot()){
   if(typeof _sp === 'function'){
     window.showPage = function(){ var r = _sp.apply(this, arguments); setTimeout(run, 80); setTimeout(run, 600); return r; };
   }
+})();</script><script id="vembed-jump-links">(function(){
+  // The automotive hero's three CTAs are styled clickable (cursor:pointer) but
+  // ship with no href and no handler, so they did nothing. Their labels match
+  // the section eyebrows exactly, so wire each one to its section.
+  var MAP = {
+    'garage & repair': 'av-garage',
+    'workshop live'  : 'av-tracker',
+    'logistics'      : 'av-logi'
+  };
+  function jump(doc, frame, id){
+    var el = doc.getElementById(id); if(!el) return;
+    // the embed is sized to its full content height, so it has no internal
+    // scroll — the parent window is what has to move
+    var top = 0, n = el;
+    while(n){ top += n.offsetTop; n = n.offsetParent; }
+    var navH = 84;
+    var y = frame.getBoundingClientRect().top + window.pageYOffset + top - navH;
+    try{ window.scrollTo({top:y, behavior:'smooth'}); }catch(e){ window.scrollTo(0,y); }
+  }
+  function wire(frame){
+    var d; try{ d = frame.contentDocument; }catch(e){ return; }
+    if(!d || !d.body || d.body.dataset.abigJump) return;
+    d.body.dataset.abigJump = '1';
+    d.addEventListener('click', function(e){
+      var b = e.target.closest && e.target.closest('button,a');
+      if(!b) return;
+      var id = MAP[(b.textContent||'').trim().toLowerCase()];
+      if(!id) return;
+      e.preventDefault();
+      jump(d, frame, id);
+    });
+  }
+  function run(){
+    var frames = document.querySelectorAll('#page-v-automotive iframe, .vembed');
+    for(var i=0;i<frames.length;i++) wire(frames[i]);
+  }
+  if(document.readyState!=='loading') run();
+  document.addEventListener('DOMContentLoaded', run);
+  window.addEventListener('load', run);
+  var n=0, iv=setInterval(function(){ run(); if(++n>40) clearInterval(iv); }, 500);
+  var _sp=window.showPage;
+  if(typeof _sp==='function'){
+    window.showPage=function(){ var r=_sp.apply(this,arguments); setTimeout(run,80); setTimeout(run,600); return r; };
+  }
 })();</script><script id="coin-chip-cycler">(function(){
   var SYMS=[['BTCUSDT','BTC'],['DOGEUSDT','DOGE'],['SOLUSDT','SOL'],['XRPUSDT','XRP']];
   var data={},idx=0;
